@@ -37,3 +37,9 @@ tasks.withType(Test) {
 test {
     useJUnitPlatform()
 }
+
+task practiceForm_test(type: Test) {
+    useJUnitPlatform {
+        includeTags 'practiceForm'
+    }
+}

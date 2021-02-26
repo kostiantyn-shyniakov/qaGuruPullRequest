@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -43,6 +44,7 @@ public class Lesson8 {
     }
 
     @Test
+    @Tag("practiceForm")
     void practiceFormTest() {
 
         open("https://demoqa.com/automation-practice-form");
