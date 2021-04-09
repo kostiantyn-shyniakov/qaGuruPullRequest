@@ -11,6 +11,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.aeonbits.owner:owner:1.0.12'
     testImplementation 'com.codeborne:selenide:5.17.3'
     testImplementation 'io.qameta.allure:allure-selenide:2.13.6'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'

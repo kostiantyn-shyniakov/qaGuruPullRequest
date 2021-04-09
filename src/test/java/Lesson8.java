@@ -1,7 +1,9 @@
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
 import com.github.javafaker.Faker;
+import helpers.WebConfig;
 import io.qameta.allure.selenide.AllureSelenide;
+import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
@@ -15,20 +17,22 @@ import static com.codeborne.selenide.logevents.SelenideLogger.addListener;
 import static helpers.AttachmentsHelper.*;
 
 public class Lesson8 {
+    final static WebConfig config = ConfigFactory.create(WebConfig.class, System.getProperties());
     @BeforeAll
-    static void setup() {
+    public static void setup() {
         Configuration.startMaximized = true;
         addListener("AllureSelenide", new AllureSelenide());
-        Configuration.browser = System.getProperty("browser", "chrome");
+        Configuration.browser = config.getWebDriverBrowser();
+        Configuration.browserVersion= config.getWebDriverBrowserVersion();
         Configuration.startMaximized = true;
 
-        if(System.getProperty("remote_driver") != null) {
+        if(config.getRemoteUrl() != null) {
             // config for Java + Selenide
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setCapability("enableVNC", true);
             capabilities.setCapability("enableVideo", true);
             Configuration.browserCapabilities = capabilities;
-            Configuration.remote = System.getProperty("remote_driver");
+            Configuration.remote = config.getRemoteUrl();
         }
 
     }
@@ -38,7 +42,7 @@ public class Lesson8 {
         attachScreenshot("Last screenshot");
         attachPageSource();
         attachAsText("Browser console logs", getConsoleLogs());
-        if(System.getProperty("video_storage") != null)
+        if(config.getVideoStorageUrl() != null)
             attachVideo();
         closeWebDriver();
     }
@@ -55,9 +59,9 @@ public class Lesson8 {
                 email = faker.internet().emailAddress(),
                 address = faker.address().fullAddress(),
                 phoneNumber = Long.toString(faker.number().numberBetween(1000000000L,9999999999L)),
-                birthYear = Integer.toString(faker.number().numberBetween(1900,2100)),
+                birthYear = Integer.toString(faker.number().numberBetween(1900,2000)),
                 birthMonth = months[faker.number().numberBetween(0,11)],
-                birthDay =  Integer.toString(faker.number().numberBetween(1,19)),
+                birthDay =  Integer.toString(faker.number().numberBetween(11,19)),
                 gender = faker.demographic().sex();
 
         $("#firstName").setValue(firstName);
